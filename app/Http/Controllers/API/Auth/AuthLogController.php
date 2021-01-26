@@ -26,6 +26,6 @@ class AuthLogController extends Controller
             return Response()->json(["Error 500", $e->getMessage()], 500);
         }
 
-        return Response()->json(["token" => $token, "select_uuid" => $select_uuid], 200);
+        return Response()->json(["token" => $token], 200);
     }
 }
