@@ -2,9 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\Auth\UserController;
 use App\Http\Controllers\API\Auth\RegisterController;
 use App\Http\Controllers\API\Auth\LoginController;
+use App\Http\Controllers\API\Auth\AuthLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('/users', UserController::class);
-
-Route::post('/register', RegisterController::class);
+//Route::post('/register', RegisterController::class);
+Route::group(['namespace' => "App\Http\Controllers\API\Auth\\"], function () {
+    Route::post('/register', 'RegisterController@__invoke');
+});
 Route::post('/login', LoginController::class);
+

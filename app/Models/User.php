@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\AuthLog;
 
 class User extends Model
 {
@@ -22,4 +23,9 @@ class User extends Model
     protected $hidden = [
       'password',
     ];
+
+    public function log() {
+        return $this->hasMany(AuthLog::class, 'user_uuid', 'uuid');
+    }
+
 }

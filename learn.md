@@ -1,6 +1,6 @@
 модель User
 поля id ФИО логин пароль uuid photo 
-Remember
+AuthLog
 id, token, user_uuid, uuid, useragent
 Role
 admin, user, editor
