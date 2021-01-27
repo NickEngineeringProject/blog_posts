@@ -3,20 +3,14 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Middleware\AuthToken;
 use App\Models\AuthLog;
-use App\Models\User;
-use Illuminate\Http\Client\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class AuthLogController extends Controller
 {
-    public static function invoke($uuid, $agent, $auth_token) {
+    public static function invoke($uuid, $agent) {
         $str_rand = Str::random(32);
-        $token = Hash::make($str_rand);
+        $token = sha1($str_rand);
         try {
             AuthLog::insert([
                 'user_uuid' => $uuid,
@@ -27,14 +21,7 @@ class AuthLogController extends Controller
             return Response()->json(["Error 500", $e->getMessage()], 500);
         }
 
-        $user_uuid = AuthLog::select($uuid)->first();
-        $user_uuid->token;
-
-        if ($user_uuid == $auth_token) {
-            return 'Вы авторизированны';
-        }
-
-        return Response()->json(["token" => $token], 200);
+        return Response()->json(["token" => $str_rand], 200);
 
     }
 }

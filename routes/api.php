@@ -22,10 +22,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/users', UserController::class);
-//Route::post('/register', RegisterController::class);
+Route::group(['middleware' => ['token']], function () {
+    Route::get('/test', function (Request $request) {
+        return Response()->json($request->all(), 200);
+    });
+});
+
 Route::group(['namespace' => "App\Http\Controllers\API\Auth\\"], function () {
     Route::post('/register', 'RegisterController@__invoke');
+    Route::post('/login', 'LoginController@__invoke');
 });
-Route::post('/login', LoginController::class);
+
+Route::apiResource('/users', UserController::class);
+
+
+
 
