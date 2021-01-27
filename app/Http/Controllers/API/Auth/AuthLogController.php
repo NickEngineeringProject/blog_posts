@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Middleware\AuthToken;
 use App\Models\AuthLog;
 use App\Models\User;
 use Illuminate\Http\Client\Request;
@@ -13,7 +14,7 @@ use Illuminate\Support\Str;
 
 class AuthLogController extends Controller
 {
-    public static function invoke($uuid, $agent) {
+    public static function invoke($uuid, $agent, $auth_token) {
         $str_rand = Str::random(32);
         $token = Hash::make($str_rand);
         try {
@@ -26,6 +27,14 @@ class AuthLogController extends Controller
             return Response()->json(["Error 500", $e->getMessage()], 500);
         }
 
+        $user_uuid = AuthLog::select($uuid)->first();
+        $user_uuid->token;
+
+        if ($user_uuid == $auth_token) {
+            return 'Вы авторизированны';
+        }
+
         return Response()->json(["token" => $token], 200);
+
     }
 }

@@ -2,7 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Controllers\API\Auth\AuthLogController;
+use App\Models\AuthLog;
 use Closure;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 
 class AuthToken
@@ -17,17 +20,20 @@ class AuthToken
     public function handle(Request $request, Closure $next)
     {
 
-        $_auth_token = $request->header('X-Auth-Token', null);
+        $auth_token = $request->header('X-Auth-Token', null);
 
-        if ($_auth_token)
+        if ($auth_token)
         {
-            $_token = AuthToken::find($_auth_token);
-            if (!$_token)
-                abort('401', 'No such token. Request a new one.');
+            $token = AuthLog::find($auth_token);
+            if (!$token)
+                abort('401', 'Not token');
         }
         else
-            abort('401', 'No auth token provided');
+            abort('401', 'Not auth token');
 
-        return $next($request);
+        return [
+            AuthLogController::invoke($auth_token),
+            $next($request)
+        ];
     }
 }
