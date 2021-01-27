@@ -3,9 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\Auth\UserController;
-use App\Http\Controllers\API\Auth\RegisterController;
-use App\Http\Controllers\API\Auth\LoginController;
-use App\Http\Controllers\API\Auth\AuthLogController;
+use App\Http\Controllers\API\PhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,17 +21,17 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => ['token']], function () {
-    Route::get('/test', function (Request $request) {
+    Route::get('/token', function (Request $request) {
         return Response()->json($request->all(), 200);
     });
 });
 
+Route::apiResource('/users', UserController::class);
 Route::group(['namespace' => "App\Http\Controllers\API\Auth\\"], function () {
     Route::post('/register', 'RegisterController@__invoke');
     Route::post('/login', 'LoginController@__invoke');
 });
 
-Route::apiResource('/users', UserController::class);
 
 
 

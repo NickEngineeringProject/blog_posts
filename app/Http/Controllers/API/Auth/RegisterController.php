@@ -17,7 +17,6 @@ class RegisterController extends Controller
         return User::insert(
             [
                 'uuid'=> $uuid,
-
                 'login' => $request->get('login'),
                 'password' => Hash::make($request->get('password')),
 

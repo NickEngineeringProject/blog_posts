@@ -32,8 +32,9 @@ class UserController extends Controller
             'last_name',
             'patronymic',
             'login',
-            'photo',
             'password',
+            'photo',
+            'token' => '',
         ]));
     }
 
@@ -66,7 +67,9 @@ class UserController extends Controller
             'patronymic',
             'login',
             'photo',
-            'password',]));
+            'password',
+            'token' => '',
+        ]));
         return $user;
     }
 
