@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Http\Controllers\API\Auth\AuthLogController;
 use App\Models\AuthLog;
 use Closure;
-use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
 
 class AuthToken
