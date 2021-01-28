@@ -2,30 +2,31 @@
 
 namespace App\Models;
 
-use App\Traits\HasRolesAndPermissions;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    use HasFactory, HasRolesAndPermissions;
+    use HasFactory;
+
+    const PATH_TO_USER_IMAGE_STORE = "/uploads/";
 
     protected $fillable = [
-        'uuid',
         'first_name',
         'last_name',
         'patronymic',
         'login',
         'photo',
-        'password'
+        'password',
+        'role'
     ];
 
     protected $hidden = [
       'password',
     ];
 
-    public function log() {
-        return $this->hasMany(AuthLog::class, 'user_uuid', 'uuid');
+    public static function getPhotoAttribute($path)
+    {
+        return $photo = url("/storage" . self::PATH_TO_USER_IMAGE_STORE . $path);
     }
-
 }

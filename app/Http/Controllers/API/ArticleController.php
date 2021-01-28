@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use GuzzleHttp\Middleware;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -26,7 +27,8 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->middleware('can:edit_post');
+        return Article::create($request->only(['title', 'description']));
     }
 
     /**
@@ -37,7 +39,8 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Article::findOrFail($id);
+        return $post;
     }
 
     /**
@@ -49,7 +52,9 @@ class ArticleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $article = Article::findOrFail($id);
+        $article->update($request->only(['title', 'description']));
+        return $article;
     }
 
     /**
@@ -60,6 +65,6 @@ class ArticleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Article::findOrFail($id)->delete();
     }
 }

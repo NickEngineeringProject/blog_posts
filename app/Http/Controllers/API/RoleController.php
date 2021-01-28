@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class RoleController extends Controller
 {
@@ -14,7 +16,7 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
+        return Role::all();
     }
 
     /**
@@ -25,7 +27,15 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $uuid = Str::uuid()->toString();
+        $name = $request->get('name', 'user');
+        $slug = mb_strtolower($name);
+
+        return Role::create([
+            'uuid' => $uuid,
+            'name' => $name,
+            'slug' => $slug,
+        ]);
     }
 
     /**
@@ -36,7 +46,8 @@ class RoleController extends Controller
      */
     public function show($id)
     {
-        //
+        $role = Role::findOrFail($id);
+        return $role;
     }
 
     /**
@@ -48,7 +59,18 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // TODO: переписать update
+        $role = Role::findOrFail($id);
+        $uuid = Str::uuid()->toString();
+        $name = $request->get('name');
+        $slug = mb_strtolower($name);
+
+        $role->update([
+            'uuid' => $uuid,
+            'name' => $name,
+            'slug' => $slug,
+        ]);
+        return $role;
     }
 
     /**
@@ -59,6 +81,6 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Role::findOrFail($id)->delete();
     }
 }

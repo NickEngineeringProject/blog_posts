@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
 
             $table->string('login')->unique();
             $table->string('password')->unique();
-            $table->string('token')->default('');
+            $table->string('role');
 
             $table->string('photo');
 
