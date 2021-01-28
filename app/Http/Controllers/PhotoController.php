@@ -2,10 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\API\Auth\UserController;
-use App\Models\User;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Str;
 
 class PhotoController extends Controller
