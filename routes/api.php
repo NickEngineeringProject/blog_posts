@@ -21,7 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['namespace' => "App\Http\Controllers\API\\"], function () {
     Route::apiResource('/roles', 'RoleController');
     Route::apiResource('/articles', 'ArticleController');
-    Route::post('/articles', 'ArticleController@store')->middleware('can:edit-panel');
+    Route::post('/articles', 'ArticleController@store');
+//        ->middleware('can:edit-panel');
 });
 
 Route::group(['middleware' => ['token']], function () {

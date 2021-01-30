@@ -15,9 +15,14 @@ class CreateArticlesTable extends Migration
     {
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->unique();
             $table->string('title');
             $table->string('description');
+            $table->string('photo');
+            $table->uuid('user_uuid');
             $table->timestamps();
+            $table->foreign('user_uuid')->references('uuid')
+                ->on('users');
         });
     }
 

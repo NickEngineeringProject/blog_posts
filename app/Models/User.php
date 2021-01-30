@@ -9,7 +9,7 @@ class User extends Model
 {
     use HasFactory;
 
-//    const PATH_TO_USER_IMAGE_STORE = "/uploads/";
+    const PATH_TO_USER_IMAGE_STORE = "/uploads/";
 
     protected $fillable = [
         'first_name',
@@ -25,8 +25,8 @@ class User extends Model
       'password',
     ];
 
-//    public static function getPhotoAttribute($path)
-//    {
-//        return $photo = url("/storage" . self::PATH_TO_USER_IMAGE_STORE . $path);
-//    }
+    public static function getPhotoAttribute($path)
+    {
+        return $photo = url("/storage" . self::PATH_TO_USER_IMAGE_STORE . $path);
+    }
 }

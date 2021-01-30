@@ -17,7 +17,7 @@ class RegisterController extends Controller
 
         if ($request->hasFile('image')) {
             $photo = PhotoController::upload($request->file('image'));
-        }
+        } else abort(404);
 
         return User::insert([
                 'uuid'=> $uuid,

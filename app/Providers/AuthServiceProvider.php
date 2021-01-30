@@ -26,9 +26,9 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('edit_post', function (User $user) {
-            return $user->isAdmin();
-        });
+//        Gate::define('edit_post', function (User $user) {
+//            return $user->isAdmin();
+//        });
 
 //        if(!Gate::allows('edit_post')) {
 //            abort(403);
